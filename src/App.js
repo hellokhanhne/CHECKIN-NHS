@@ -170,7 +170,7 @@ function App() {
 
             <div className="scanner-wrapper">
               <Row className="bg-white">
-                <Col span={24} className={styles.camera}>
+                <Col span={24}>
                   <Scanner onScan={scan} />
                 </Col>
                 <Col span={24}>
