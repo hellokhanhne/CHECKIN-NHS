@@ -33,7 +33,7 @@ function ListCheckIn() {
           listAttend.find((a) => a.userId === unitListAttend[index])
         );
         setIndex((i) => i + 1);
-      }, 5000);
+      }, 10000);
     }
     return () => {
       clearTimeout(timer);
