@@ -1,7 +1,6 @@
 {
   "name": "check-in-nhs",
   "version": "0.1.0",
-  "homepage": "https://quangmv2.github.io/check-in-nhs/",
   "private": true,
   "dependencies": {
     "antd": "^4.22.2",
