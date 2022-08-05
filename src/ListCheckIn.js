@@ -13,7 +13,7 @@ function ListCheckIn() {
     const q = query(collection(db, "checkIns_test_5"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
-
+      arr.sort((a, b) => a.checkIn - b.checkIn);
       setUnitListAttend(Array.from(new Set(arr.map((a) => a.userId))));
       setListAttend(arr);
     });
@@ -32,7 +32,7 @@ function ListCheckIn() {
         setUserCurrent(
           listAttend.find((a) => a.userId === unitListAttend[index])
         );
-        setIndex((i) => i + 1);
+        setIndex((i) => (i === unitListAttend.length ? i : i + 1));
       }, 10000);
     }
     return () => {
