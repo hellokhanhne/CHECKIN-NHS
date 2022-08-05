@@ -23,7 +23,7 @@ function ListCheckIn() {
   }, []);
 
   useEffect(() => {
-    if (index + 1 > unitListAttend.length && unitListAttend.length > 0) {
+    if (index > unitListAttend.length && unitListAttend.length > 0) {
       return;
     }
     let timer = null;

@@ -115,7 +115,7 @@ function App() {
               >
                 <div
                   style={{
-                    maxWidth: 300,
+                    maxWidth: 200,
                     objectFit: "cover",
                   }}
                 >
