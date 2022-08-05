@@ -24,7 +24,7 @@ function ListCheckIn() {
 
   useEffect(() => {
     if (index + 1 > unitListAttend.length) {
-      return setIndex(0);
+      return;
     }
     let timer = null;
     if (unitListAttend.length > 0) {
