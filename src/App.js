@@ -13,6 +13,10 @@ function App() {
   const [userCurrent, setUserCurrent] = useState(null);
   const [listAttend, setListAttend] = useState([]);
 
+  // const q = query(collection(db, "users"));
+
+  // getDocs(q).then((d) => console.log(d.docs.map((c) => c.data())));
+
   const prev = useRef("");
 
   useEffect(() => {
@@ -22,6 +26,8 @@ function App() {
       querySnapshot.forEach((doc) => {
         arr.push(doc.data());
       });
+      arr.sort((a, b) => b.checkIn - a.checkIn);
+      // console.log(arr);
       setListAttend(arr);
     });
     return () => {
@@ -31,6 +37,7 @@ function App() {
 
   const scan = useCallback(
     async (value) => {
+      console.log(value === prev.current);
       if (value === prev.current) {
         return;
       }
@@ -184,7 +191,7 @@ function App() {
                       </div>
                     }
                     bordered
-                    dataSource={listAttend.reverse() || []}
+                    dataSource={listAttend || []}
                     renderItem={(item) => (
                       <List.Item>
                         {item?.name}
