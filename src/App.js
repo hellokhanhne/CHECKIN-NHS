@@ -1,5 +1,5 @@
 import { Col, List, Row } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { doc, setDoc, onSnapshot } from "firebase/firestore";
 import moment from "moment";
@@ -16,7 +16,7 @@ function App() {
   const prev = useRef("");
 
   useEffect(() => {
-    const q = query(collection(db, "checkIns_test_4"));
+    const q = query(collection(db, "checkIns_test_5"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = [];
       querySnapshot.forEach((doc) => {
@@ -44,7 +44,7 @@ function App() {
         const dateString = moment(date).format("DD-MM-YYYY").toString();
         setUserCurrent({ ..._doc.data(), checkIn: date });
         const q2 = query(
-          collection(db, "checkIns_test_4"),
+          collection(db, "checkIns_test_5"),
           where("userId", "==", _doc.data().userId)
         );
         let checkExist = false;
@@ -58,7 +58,7 @@ function App() {
         }
         if (!checkExist) {
           console.log("zoo");
-          await setDoc(doc(db, "checkIns_test_4", uuidv4()), {
+          await setDoc(doc(db, "checkIns_test_5", uuidv4()), {
             ..._doc.data(),
             checkIn: date,
           });
