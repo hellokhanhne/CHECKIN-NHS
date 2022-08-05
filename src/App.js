@@ -5,7 +5,6 @@ import { doc, setDoc, onSnapshot } from "firebase/firestore";
 import moment from "moment";
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
-import styles from "./App.module.css";
 import Scanner from "./components/scanner";
 import { db } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
