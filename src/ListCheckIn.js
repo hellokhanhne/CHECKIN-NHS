@@ -1,31 +1,20 @@
-import { Col, List, Row } from "antd";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
-import { useCallback, useEffect, useRef, useState } from "react";
-import Scanner from "./components/scanner";
+import { useEffect, useState } from "react";
 import { db } from "./firebase";
-import { v4 as uuidv4 } from "uuid";
 
-function App() {
+function ListCheckIn() {
   const [userCurrent, setUserCurrent] = useState(null);
   const [listAttend, setListAttend] = useState([]);
-
-  const q = query(collection(db, "users"));
-
-  getDocs(q).then((d) => console.log(d.docs.map((c) => c.data())));
-
-  const prev = useRef("");
+  const [unitListAttend, setUnitListAttend] = useState([]);
+  let [index, setIndex] = useState(0);
 
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const arr = [];
-      querySnapshot.forEach((doc) => {
-        arr.push(doc.data());
-      });
-      arr.sort((a, b) => b.checkIn - a.checkIn);
-      // console.log(arr);
+      const arr = querySnapshot.docs.map((d) => d.data());
+
+      setUnitListAttend(Array.from(new Set(arr.map((a) => a.userId))));
       setListAttend(arr);
     });
     return () => {
@@ -33,45 +22,23 @@ function App() {
     };
   }, []);
 
-  const scan = useCallback(
-    async (value) => {
-      console.log(value === prev.current);
-      if (value === prev.current) {
-        return;
-      }
-      prev.current = value;
-
-      const q = query(collection(db, "users"), where("qrcode", "==", value));
-
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(async (_doc) => {
-        const date = moment().valueOf();
-        const dateString = moment(date).format("DD-MM-YYYY").toString();
-        setUserCurrent({ ..._doc.data(), checkIn: date });
-        const q2 = query(
-          collection(db, "checkIns_test_5"),
-          where("userId", "==", _doc.data().userId)
+  useEffect(() => {
+    if (index + 1 > unitListAttend.length) {
+      return setIndex(0);
+    }
+    let timer = null;
+    if (unitListAttend.length > 0) {
+      timer = setTimeout(() => {
+        setUserCurrent(
+          listAttend.find((a) => a.userId === unitListAttend[index])
         );
-        let checkExist = false;
-        for (let snap of (await getDocs(q2)).docs) {
-          if (
-            dateString ===
-            moment(snap.data().checkIn).format("DD-MM-YYYY").toString()
-          ) {
-            checkExist = true;
-          }
-        }
-        if (!checkExist) {
-          console.log("zoo");
-          await setDoc(doc(db, "checkIns_test_5", uuidv4()), {
-            ..._doc.data(),
-            checkIn: date,
-          });
-        }
-      });
-    },
-    [setUserCurrent]
-  );
+        setIndex((i) => i + 1);
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [index, unitListAttend, listAttend]);
 
   return (
     <div className="h-100-v d-flex align-items-center justify-content-center">
@@ -108,14 +75,14 @@ function App() {
               </div>
 
               <div
-                className="d-flex "
+                className="d-flex justify-content-center "
                 style={{
-                  marginTop: "1rem",
+                  marginTop: "2rem",
                 }}
               >
                 <div
                   style={{
-                    maxWidth: 300,
+                    maxWidth: 200,
                     objectFit: "cover",
                   }}
                 >
@@ -129,7 +96,6 @@ function App() {
                   />
                 </div>
                 <div
-                  className="flex-1"
                   style={{
                     marginLeft: "1rem",
                     marginRight: "1rem",
@@ -172,35 +138,6 @@ function App() {
                 </div>
               </div>
             </div>
-
-            <div className="scanner-wrapper">
-              <Row className="bg-white">
-                <Col span={24}>
-                  <Scanner onScan={scan} />
-                </Col>
-                <Col span={24}>
-                  <List
-                    size="large"
-                    className="w-100"
-                    header={
-                      <div>
-                        Tổng đại biểu đã tham dự:{" "}
-                        <b>{new Set(listAttend.map((l) => l.userId)).size}</b>{" "}
-                      </div>
-                    }
-                    bordered
-                    dataSource={listAttend || []}
-                    renderItem={(item) => (
-                      <List.Item>
-                        {item?.name}
-                        {"   "}
-                        {moment(item?.checkIn).format("DD-MM-YYYY HH:mm")}
-                      </List.Item>
-                    )}
-                  />
-                </Col>
-              </Row>
-            </div>
           </div>
         </div>
       </div>
@@ -208,4 +145,4 @@ function App() {
   );
 }
 
-export default App;
+export default ListCheckIn;
