@@ -67,7 +67,7 @@ function ListCheckIn() {
                     <tr>
                       <th scope="col">Ảnh</th>
                       <th scope="col">Tên</th>
-                      <th scope="col">Email</th>
+
                       <th scope="col">Đoàn</th>
                       <th scope="col">Đã check in</th>
                     </tr>
@@ -88,7 +88,7 @@ function ListCheckIn() {
                           />
                         </td>
                         <td>{l.name}</td>
-                        <td>{l.email}</td>
+
                         <td>{l.unit}</td>
                         <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
                       </tr>
@@ -99,14 +99,33 @@ function ListCheckIn() {
             </div>
             <div className="statistical">
               <div
-                className="d-flex align-items-center h-100"
+                className="d-flex  h-100"
                 style={{
-                  paddingLeft: 15,
+                  paddingLeft: 20,
                   fontSize: 18,
                 }}
               >
                 <div>
-                  <p>
+                  <div
+                    className="title-wrapper"
+                    style={{
+                      marginBottom: 0,
+                    }}
+                  >
+                    {" "}
+                    <h2
+                      style={{
+                        marginBottom: 0,
+                      }}
+                    >
+                      THỐNG KÊ
+                    </h2>{" "}
+                  </div>
+                  <p
+                    style={{
+                      marginBottom: 5,
+                    }}
+                  >
                     Số lượng đại biểu đã tham gia :{" "}
                     <b>
                       {
@@ -116,7 +135,11 @@ function ListCheckIn() {
                     </b>
                   </p>
                   {listCountUnit.map((l) => (
-                    <p>
+                    <p
+                      style={{
+                        marginBottom: 5,
+                      }}
+                    >
                       {l.key} : <b>{l.value}</b>{" "}
                     </p>
                   ))}
