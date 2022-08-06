@@ -4,41 +4,34 @@ import { useEffect, useState } from "react";
 import { db } from "./firebase";
 
 function ListCheckIn() {
-  const [userCurrent, setUserCurrent] = useState(null);
   const [listAttend, setListAttend] = useState([]);
-  const [unitListAttend, setUnitListAttend] = useState([]);
-  let [index, setIndex] = useState(0);
+  const [listCountUnit, setListCountUnit] = useState([]);
 
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
       arr.sort((a, b) => a.checkIn - b.checkIn);
-      setUnitListAttend(Array.from(new Set(arr.map((a) => a.userId))));
       setListAttend(arr);
+      const obj = arr.reduce((prev, current) => {
+        return prev[current.unit]
+          ? { ...prev, [current.unit]: prev[current.unit] + 1 }
+          : { ...prev, [current.unit]: 1 };
+      }, {});
+      const newListCountUnit = [];
+      for (let [key, value] of Object.entries(obj)) {
+        newListCountUnit.push({
+          key,
+          value,
+        });
+      }
+      setListCountUnit(newListCountUnit);
     });
+
     return () => {
       unsubscribe();
     };
   }, []);
-
-  useEffect(() => {
-    if (index + 1 > unitListAttend.length && unitListAttend.length > 0) {
-      return;
-    }
-    let timer = null;
-    if (unitListAttend.length > 0) {
-      timer = setTimeout(() => {
-        setUserCurrent(
-          listAttend.find((a) => a.userId === unitListAttend[index])
-        );
-        setIndex((i) => (i === unitListAttend.length ? i : i + 1));
-      }, 10000);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [index, unitListAttend, listAttend]);
 
   return (
     <div className="h-100-v d-flex align-items-center justify-content-center">
@@ -54,87 +47,79 @@ function ListCheckIn() {
               }}
             >
               <div className="title-wrapper">
-                <h2 className="text-green">
-                  NHIỆT LIỆT CHÀO MỪNG ĐẠI BIỂU VỀ THAM DỰ
-                </h2>
-                <h1 className="text-red">
-                  <span
-                    style={{
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    ĐẠI HỘI ĐẠI BIỂU ĐOÀN TNCS HỒ CHÍ MINH
-                  </span>{" "}
-                  <br />
-                  <span>QUẬN NGŨ HÀNH SƠN</span>
-                  <br />
-                  <span className="text-green">
-                    LẦN THỨ VI, NHIỆM KỲ 2022-2027
-                  </span>
-                </h1>
+                {" "}
+                <h2>DANH SÁCH ĐẠI BIỂU ĐÃ THAM GIA</h2>{" "}
               </div>
-
               <div
-                className="d-flex justify-content-center "
+                // className="hidden-scroll"
                 style={{
-                  marginTop: "2rem",
+                  maxHeight: 500,
+                  overflowY: "scroll",
                 }}
               >
-                <div
+                <table
                   style={{
-                    maxWidth: 200,
-                    objectFit: "cover",
+                    marginBottom: 0,
+                    marginTop: 0,
                   }}
                 >
-                  <img
-                    className="w-100"
-                    src={
-                      userCurrent?.userImg ||
-                      "https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg"
-                    }
-                    alt=""
-                  />
-                </div>
-                <div
-                  style={{
-                    marginLeft: "1rem",
-                    marginRight: "1rem",
-                    marginTop: "1rem",
-                  }}
-                >
-                  <span className="text-info">
-                    <span className="text-green">Chào mừng đại biểu:</span>{" "}
-                    <span
-                      style={{
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      <span
-                        className="text-red"
-                        style={{
-                          fontSize: 30,
-                        }}
-                      >
-                        {" "}
-                        {userCurrent?.name || ""}
-                      </span>
-                    </span>
-                  </span>
-                  <br />
-                  <span className="text-info">
-                    <span className="text-green">
-                      Đơn vị : {userCurrent?.unit || ""}
-                    </span>
-                  </span>
-                  <br />
-                  <span className="text-info">
-                    {" "}
-                    <span className="text-green">
-                      Thời gian:{" "}
-                      {userCurrent &&
-                        moment(userCurrent.checkIn).format("DD-MM-YYYY HH:mm")}
-                    </span>
-                  </span>
+                  <thead>
+                    <tr>
+                      <th scope="col">Ảnh</th>
+                      <th scope="col">Tên</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Đoàn</th>
+                      <th scope="col">Đã check in</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {listAttend.map((l) => (
+                      <tr key={l.id}>
+                        <td>
+                          <img
+                            src={l.userImg}
+                            style={{
+                              width: 150,
+                              height: 100,
+                              objectFit: "cover",
+                            }}
+                            alt=""
+                          />
+                        </td>
+                        <td>{l.name}</td>
+                        <td>{l.email}</td>
+                        <td>{l.unit}</td>
+                        <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="statistical">
+              <div
+                className="d-flex align-items-center h-100"
+                style={{
+                  paddingLeft: 15,
+                  fontSize: 18,
+                }}
+              >
+                <div>
+                  <p>
+                    Số lượng đại biểu đã tham gia :{" "}
+                    <b>
+                      {
+                        Array.from(new Set(listAttend.map((l) => l.userId)))
+                          .length
+                      }
+                    </b>
+                  </p>
+                  {listCountUnit.map((l) => (
+                    <p>
+                      {l.key} : <b>{l.value}</b>{" "}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
