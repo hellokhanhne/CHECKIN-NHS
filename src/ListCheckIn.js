@@ -1,6 +1,7 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import LazyLoad from "react-lazyload";
 import { db } from "./firebase";
 
 const tabs = [
@@ -31,9 +32,14 @@ function ListCheckIn() {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
       arr.sort((a, b) => a.checkIn - b.checkIn);
-      setTotal(new Set(arr.map((l) => l.userId)).size);
+      const setUnitIds = new Set(arr.map((l) => l.userId));
+      const setUnitArrayUser = Array.from(setUnitIds).map((id) =>
+        arr.find((u) => u.userId === id)
+      );
+      // console.log(setUnitArrayUser);
+      setTotal(setUnitIds.size);
       setListAttend(arr.filter((n) => n.unit === unit));
-      const obj = arr.reduce((prev, current) => {
+      const obj = setUnitArrayUser.reduce((prev, current) => {
         return prev[current.unit]
           ? { ...prev, [current.unit]: prev[current.unit] + 1 }
           : { ...prev, [current.unit]: 1 };
@@ -99,8 +105,7 @@ function ListCheckIn() {
                       <th scope="col">Ảnh</th>
                       <th scope="col">Tên</th>
 
-                      <th scope="col">Email</th>
-                      <th scope="col">Đã check in</th>
+                      <th scope="col">Đã check in vào thời gian</th>
                     </tr>
                   </thead>
 
@@ -108,19 +113,22 @@ function ListCheckIn() {
                     {listAttend.map((l) => (
                       <tr key={l.id}>
                         <td>
-                          <img
-                            src={l.userImg}
-                            style={{
-                              width: 150,
-                              height: 100,
-                              objectFit: "cover",
-                            }}
-                            alt=""
-                          />
+                          <LazyLoad height={100}>
+                            <img
+                              src={l.userImg}
+                              style={{
+                                width: 150,
+                                height: 100,
+                                objectFit: "cover",
+                              }}
+                              alt=""
+                            />
+                          </LazyLoad>
                         </td>
                         <td>{l.name}</td>
 
                         <td>{l.email}</td>
+
                         <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
                       </tr>
                     ))}
