@@ -22,7 +22,7 @@ const tabs = [
 
 function ListCheckIn() {
   const [listAttend, setListAttend] = useState([]);
-
+  const [total, setTotal] = useState(0);
   const [listCountUnit, setListCountUnit] = useState([]);
   const [unit, setUnit] = useState(tabs[0]);
 
@@ -31,6 +31,7 @@ function ListCheckIn() {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
       arr.sort((a, b) => a.checkIn - b.checkIn);
+      setTotal(new Set(arr.map((l) => l.userId)).size);
       setListAttend(arr.filter((n) => n.unit === unit));
       const obj = arr.reduce((prev, current) => {
         return prev[current.unit]
@@ -156,14 +157,7 @@ function ListCheckIn() {
                       marginBottom: 5,
                     }}
                   >
-                    Số lượng đại biểu đã tham gia :{" "}
-                    <b>
-                      {/* {
-                        Array.from(new Set(listAttend.map((l) => l.userId)))
-                          .length
-                      } */}
-                      {listCountUnit.reduce((t, c) => t + c.value, 0)}
-                    </b>
+                    Số lượng đại biểu đã tham gia :<b>{total}</b>
                   </p>
                   {listCountUnit.map((l) => (
                     <p
