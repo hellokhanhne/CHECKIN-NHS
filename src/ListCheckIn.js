@@ -127,8 +127,6 @@ function ListCheckIn() {
                         </td>
                         <td>{l.name}</td>
 
-                        <td>{l.email}</td>
-
                         <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
                       </tr>
                     ))}
