@@ -202,3 +202,24 @@ tfoot td {
 .statistical {
   width: 400px;
 }
+
+.tabs {
+  display: flex;
+  max-width: 700px;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: 1px solid #888;
+  margin-left: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.tab.active {
+  color: #fff;
+  background-color: rgb(255, 174, 0);
+}

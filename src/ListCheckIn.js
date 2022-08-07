@@ -3,16 +3,34 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { db } from "./firebase";
 
+const tabs = [
+  "Đại biểu chỉ định",
+  "Đoàn TNCS Hồ Chí Minh Phường Hòa Quý",
+  "Đoàn TNCS Hồ Chí Minh Phường Hòa Hải",
+  "Đoàn TNCS Hồ Chí Minh Trường THPT Võ Chí Công",
+  "Chi đoàn Quân sự Quận Ngũ Hành Sơn",
+  "Đoàn Cơ sở Công An Quận Ngũ Hành Sơn",
+  "Đoàn Phường Hòa Hải",
+  "Đại biểu khách mời",
+  "Đoàn TNCS Hồ Chí Minh Trường PT Hermann Gmeiner",
+  "Đại biểu đương nhiên",
+  "Đoàn TNCS Hồ Chí Minh Phường Mỹ An",
+  "Đoàn TNCS Hồ Chí Minh Phường Khuê Mỹ",
+  "Đoàn Trung tâm Y tế Quận Ngũ Hành Sơn",
+  "Đoàn TNCS Hồ Chí Minh Trường THPT Ngũ Hành Sơn",
+];
+
 function ListCheckIn() {
   const [listAttend, setListAttend] = useState([]);
   const [listCountUnit, setListCountUnit] = useState([]);
+  const [unit, setUnit] = useState(tabs[0]);
 
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
       arr.sort((a, b) => a.checkIn - b.checkIn);
-      setListAttend(arr);
+      setListAttend(arr.filter((n) => n.unit === unit));
       const obj = arr.reduce((prev, current) => {
         return prev[current.unit]
           ? { ...prev, [current.unit]: prev[current.unit] + 1 }
@@ -31,7 +49,7 @@ function ListCheckIn() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [unit]);
 
   return (
     <div className="h-100-v d-flex align-items-center justify-content-center">
@@ -48,12 +66,23 @@ function ListCheckIn() {
             >
               <div className="title-wrapper">
                 {" "}
-                <h2>DANH SÁCH ĐẠI BIỂU ĐÃ THAM GIA</h2>{" "}
+                <h2>DANH SÁCH ĐẠI BIỂU ĐÃ THAM GIA</h2>
+                <div className="tabs">
+                  {tabs.map((t) => (
+                    <div
+                      onClick={() => setUnit(t)}
+                      className={`tab ${t === unit ? "active" : ""}`}
+                      key={t}
+                    >
+                      {t}
+                    </div>
+                  ))}
+                </div>
               </div>
               <div
                 // className="hidden-scroll"
                 style={{
-                  maxHeight: 500,
+                  maxHeight: 450,
                   overflowY: "scroll",
                 }}
               >
@@ -68,7 +97,7 @@ function ListCheckIn() {
                       <th scope="col">Ảnh</th>
                       <th scope="col">Tên</th>
 
-                      <th scope="col">Đoàn</th>
+                      <th scope="col">Email</th>
                       <th scope="col">Đã check in</th>
                     </tr>
                   </thead>
@@ -89,7 +118,7 @@ function ListCheckIn() {
                         </td>
                         <td>{l.name}</td>
 
-                        <td>{l.unit}</td>
+                        <td>{l.email}</td>
                         <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
                       </tr>
                     ))}
@@ -136,6 +165,7 @@ function ListCheckIn() {
                   </p>
                   {listCountUnit.map((l) => (
                     <p
+                      key={l.key}
                       style={{
                         marginBottom: 5,
                       }}

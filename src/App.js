@@ -11,9 +11,13 @@ function App() {
   const [userCurrent, setUserCurrent] = useState(null);
   const [listAttend, setListAttend] = useState([]);
 
-  const q = query(collection(db, "users"));
+  // const q = query(collection(db, "users"));
 
-  getDocs(q).then((d) => console.log(d.docs.map((c) => c.data())));
+  // getDocs(q).then((d) =>
+  //   console.log(
+  //     JSON.stringify(Array.from(new Set(d.docs.map((c) => c.data().unit))))
+  //   )
+  // );
 
   const prev = useRef("");
 
