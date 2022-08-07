@@ -22,6 +22,7 @@ const tabs = [
 
 function ListCheckIn() {
   const [listAttend, setListAttend] = useState([]);
+
   const [listCountUnit, setListCountUnit] = useState([]);
   const [unit, setUnit] = useState(tabs[0]);
 
@@ -157,10 +158,11 @@ function ListCheckIn() {
                   >
                     Số lượng đại biểu đã tham gia :{" "}
                     <b>
-                      {
+                      {/* {
                         Array.from(new Set(listAttend.map((l) => l.userId)))
                           .length
-                      }
+                      } */}
+                      {listCountUnit.reduce((t, c) => t + c.value, 0)}
                     </b>
                   </p>
                   {listCountUnit.map((l) => (
