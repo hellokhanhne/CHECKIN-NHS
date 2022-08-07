@@ -104,7 +104,7 @@ function ListCheckIn() {
                     <tr>
                       <th scope="col">Ảnh</th>
                       <th scope="col">Tên</th>
-
+                      <th scope="col">Email</th>
                       <th scope="col">Đã check in vào thời gian</th>
                     </tr>
                   </thead>
@@ -126,6 +126,8 @@ function ListCheckIn() {
                           </LazyLoad>
                         </td>
                         <td>{l.name}</td>
+
+                        <td>{l.email}</td>
 
                         <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
                       </tr>
