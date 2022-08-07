@@ -193,6 +193,8 @@ const UserMage = () => {
           <tr>
             <th scope="col">Ảnh</th>
             <th scope="col">Tên</th>
+            <th scope="col">Unit</th>
+
             <th scope="col">Email</th>
             <th scope="col">Đã check in</th>
             <th scope="col">Seat1</th>
@@ -219,7 +221,7 @@ const UserMage = () => {
                 />
               </td>
               <td>{l.name}</td>
-
+              <td>{l.unit}</td>
               <td>{l.email}</td>
 
               <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
