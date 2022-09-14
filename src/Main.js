@@ -9,8 +9,9 @@ const Main = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/check-in" element={<ListCheckIn />} />
+        <Route path="/" element={<App />} />\
+        <Route path="/check-in" element={<App />} />
+        <Route path="/thong-ke" element={<ListCheckIn />} />
         <Route path="/trien-lam" element={<TriemLam />} />
         <Route path="/admin" element={<UserMage />} />
       </Routes>
