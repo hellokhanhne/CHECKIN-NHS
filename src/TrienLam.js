@@ -1,3 +1,5 @@
+import { ButtonLink } from "./components/button";
+
 const data = [
   {
     title: "Ban chấp hành Quận Đoàn khóa V, nhiệm kỳ 2017 - 2022",
@@ -79,46 +81,26 @@ const data = [
 
 function TriemLam() {
   return (
-    <div className="h-100-v d-flex align-items-center justify-content-center">
+    <div className={` trienlam-wrapper`}>
       <div
-        className={` main-wrapper`}
+        className="w-100 h-100 d-flex justify-content-center align-items-center flex-col"
         style={{
-          paddingTop: "3rem",
+          transform: "translateY(8vh)",
         }}
       >
         <div>
-          <div className="d-flex  ">
-            <div
-              className="flex-1 "
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="title-wrapper">
-                <h1
-                  style={{
-                    fontSize: 40,
-                    color: "#001d56",
-                    marginBottom: 5,
-                    marginTop: 10,
-                  }}
-                >
-                  Triễn lãm ảnh thực tế ảo
-                </h1>
-              </div>
-              <div className="d-flex list-v">
-                {data.map((d) => (
-                  <a target="_blank" className="item-v " href={d.url}>
-                    <img src={d.image} alt="" />
-                    <p>{d.title}</p>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+          <video controls loop autoPlay muted>
+            <source src="/Trailer.mp4" type="video/mp4" />
+          </video>
         </div>
+        <ButtonLink
+          href="https://trien-lam.netlify.app/phong-trao-tuoi-tre-sang-tao"
+          style={{
+            marginTop: "calc(.5vw + .5vh)",
+          }}
+          text="VÀO XEM"
+          bold
+        />
       </div>
     </div>
   );

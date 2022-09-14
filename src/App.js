@@ -70,9 +70,9 @@ function App() {
   );
 
   return (
-    <div className="h-100-v d-flex align-items-center justify-content-center">
+  
       <div className={` main-wrapper`}>
-        <div>
+        {/* <div>
           <div className="d-flex  ">
             <div
               className="flex-1 "
@@ -198,9 +198,9 @@ function App() {
               </Row>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
-    </div>
+  
   );
 }
 
