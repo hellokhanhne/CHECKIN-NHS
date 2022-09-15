@@ -90,7 +90,10 @@ function TriemLam() {
       >
         <div>
           <video controls loop autoPlay muted>
-            <source src="/Trailer.mp4" type="video/mp4" />
+            <source
+              src="https://discloud-storage.herokuapp.com/file/df1d23b10519895fb4a9dfe7c4519535/trailer.mp4"
+              type="video/mp4"
+            />
           </video>
         </div>
         <ButtonLink

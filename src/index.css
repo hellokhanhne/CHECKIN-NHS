@@ -315,3 +315,34 @@ input[type="text"] {
   border: 1px solid #000;
   padding: 10px 20px;
 }
+
+
+@media(max-width : 1000px) {
+   .trienlam-wrapper .w-100.h-100 {
+      transform: translateY(4vh) !important;
+   }
+
+   .trienlam-wrapper video {
+    width: 50vw;
+   }
+}
+
+@media(max-width : 700px) {
+  .trienlam-wrapper .w-100.h-100 {
+     transform: translateY(3vh) !important;
+  }
+
+  .trienlam-wrapper video {
+   width: 40vw;
+  }
+}
+
+@media(max-width : 550px) {
+  .trienlam-wrapper .w-100.h-100 {
+     transform: translateY(2vh) !important;
+  }
+
+  .trienlam-wrapper video {
+   width: 45vw;
+  }
+}
