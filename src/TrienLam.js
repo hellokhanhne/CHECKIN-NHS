@@ -1,5 +1,5 @@
 import banner from "../src/banner.png";
-import gttrienlam from "../src/GThieuTrienLam.jpg";
+import gttrienlam from "../src/GThieuTrienLam.png";
 
 function TriemLam() {
   return (
