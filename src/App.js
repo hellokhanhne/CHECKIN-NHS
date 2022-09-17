@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [userCurrent, setUserCurrent] = useState(null);
-  const [listAttend, setListAttend] = useState([]);
+  // const [listAttend, setListAttend] = useState([]);
 
   const prev = useRef("");
 
@@ -22,7 +22,7 @@ function App() {
       });
       arr.sort((a, b) => b.checkIn - a.checkIn);
 
-      setListAttend(arr);
+      // setListAttend(arr);
     });
     return () => {
       unsubscribe();
@@ -70,9 +70,82 @@ function App() {
   );
 
   return (
-  
-      <div className={` main-wrapper`}>
-        {/* <div>
+    <div className={` main-wrapper`}>
+      <div
+        className="w-100 h-100 d-flex align-items-center justify-content-between"
+        style={{
+          padding: "0 10vw",
+        }}
+      >
+        <div
+          style={{
+            width: "32%",
+            height: "50vh",
+            transform: "translateY(-2vh)",
+            objectFit: "fill",
+            borderRadius: "1rem",
+            overflow: "hidden",
+            border: ".4vw solid #64dafb",
+          }}
+        >
+          <img
+            src={
+              userCurrent?.userImg ||
+              "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg"
+            }
+            style={{}}
+            className="w-100 h-100"
+            alt=""
+          />
+        </div>
+        <div
+          className="d-flex flex-column"
+          style={{
+            width: "32%",
+            height: "50vh",
+            transform: "translateY(-2vh)",
+            objectFit: "fill",
+            borderRadius: "1rem",
+            border: ".4vw solid #64dafb",
+          }}
+        >
+          <Scanner onScan={scan} />
+          <div
+            className=" flex-1 d-flex align-items-start px-2 checkIn-info-wrap"
+            style={{
+              maxHeight: "27vh",
+              overflowY: "auto",
+            }}
+          >
+            <div
+              className="text-center w-100  d-flex flex-column justify-content-center persion-info "
+              style={{
+                padding: "1vw 0.75rem",
+              }}
+            >
+              <h1 className="font-title-medium border-text-white text-red">
+                NHIỆT LIỆT CHÀO MỪNG ĐẠI BIỂU
+              </h1>
+              <h1 className="font-title-medium border-text-red font-large text-white">
+                {userCurrent?.name || "NGUYỄN VĂN A"}
+              </h1>
+              <h2 className="font-title-medium border-text-white text-green">
+                QUẬN ĐOÀN {userCurrent?.unit || "A"}
+              </h2>
+              <h2 className="font-title-medium border-text-white text-red">
+                ĐÃ VỀ THAM DỰ ĐẠI HỘI
+              </h2>
+              <h2 className=" text-pink font-title-medium border-text-white">
+                VỊ TRÍ GHẾ NGỒI PHIÊN 1: {userCurrent?.seat1 || "00"}
+              </h2>
+              <h2 className=" text-pink font-title-medium border-text-white">
+                VỊ TRÍ GHẾ NGỒI PHIÊN 2: {userCurrent?.seat2 || "00"}
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div>
           <div className="d-flex  ">
             <div
               className="flex-1 "
@@ -199,8 +272,7 @@ function App() {
             </div>
           </div>
         </div> */}
-      </div>
-  
+    </div>
   );
 }
 

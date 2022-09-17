@@ -49,14 +49,15 @@ function Scanner({ onScan }) {
       {device && (
         <Col span={24}>
           <QrReader
+            className="w-100"
             constraints={{
               video: { deviceId: device.deviceId },
             }}
-            delay={100}
             style={{
-              height: 240,
-              width: 320,
+              height: "20vh",
+              objectFit: "fill",
             }}
+            delay={100}
             onError={handleError}
             onScan={handleScan}
             onLoad={(value) => console.log("load", value)}
