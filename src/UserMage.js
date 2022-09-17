@@ -80,7 +80,7 @@ const UserMage = () => {
 
   return (
     <div className="user-manage-wrapper">
-      <div>
+      {/* <div>
         <div
           style={{
             textAlign: "right",
@@ -88,7 +88,7 @@ const UserMage = () => {
         >
           <Button text="THÊM MỚI" bold />
         </div>
-      </div>
+      </div> */}
       {/* <div
         style={{
           marginTop: "2rem",

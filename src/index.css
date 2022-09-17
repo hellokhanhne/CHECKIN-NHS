@@ -16,18 +16,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 .main-wrapper {
   background-image: url("../public/XIX-CHECKINDAIBIEU.jpg");
-  width:  100%; 
-  height: 100vh; 
+  width: 100%;
+  height: 100vh;
   background-size: 83%;
   background-position: center;
   background-repeat: no-repeat;
 }
-
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -59,8 +55,6 @@ code {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
-
-
 
 .ant-list-empty-text {
   max-height: 150px;
@@ -125,13 +119,12 @@ h1 {
   max-height: 155px !important;
 }
 
-
 /* list vitual  */
 .trienlam-wrapper {
   background-image: url("../public/XIX-TRIENLAM.jpg");
-  width:  100%; 
-  height: 100vh; 
-  background-size: 83%;
+  width: 100%;
+  height: 100vh;
+  background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
   padding: 10%;
@@ -139,32 +132,30 @@ h1 {
 
 .trienlam-wrapper video {
   width: 50vw;
-  border: calc(.2vw + .2vh) solid #64dafb;
-  border-radius: calc(.05vw + .05vh);
+  border: calc(0.2vw + 0.2vh) solid #64dafb;
+  border-radius: calc(0.05vw + 0.05vh);
   /* margin-bottom: calc((.2vw + .2vh) * -1); */
 }
 
 .user-manage-wrapper {
   background-image: url("../public/XIX-ADMIN.jpg");
-  width:  100%; 
-  height: 100vh; 
+  width: 100%;
+  height: 100vh;
   background-size: 83%;
   background-position: center;
   background-repeat: no-repeat;
   padding: 10%;
 }
 
-
 .list-v {
   flex-wrap: wrap;
   justify-content: space-between;
-  
 }
 
 .item-v {
   cursor: pointer;
   width: calc(100% / 6 - 10px);
-  
+
   /* margin-lef; */
   display: block;
 }
@@ -316,33 +307,32 @@ input[type="text"] {
   padding: 10px 20px;
 }
 
+@media (max-width: 1000px) {
+  .trienlam-wrapper .w-100.h-100 {
+    transform: translateY(4vh) !important;
+  }
 
-@media(max-width : 1000px) {
-   .trienlam-wrapper .w-100.h-100 {
-      transform: translateY(4vh) !important;
-   }
-
-   .trienlam-wrapper video {
+  .trienlam-wrapper video {
     width: 50vw;
-   }
-}
-
-@media(max-width : 700px) {
-  .trienlam-wrapper .w-100.h-100 {
-     transform: translateY(3vh) !important;
-  }
-
-  .trienlam-wrapper video {
-   width: 40vw;
   }
 }
 
-@media(max-width : 550px) {
+@media (max-width: 700px) {
   .trienlam-wrapper .w-100.h-100 {
-     transform: translateY(2vh) !important;
+    transform: translateY(3vh) !important;
   }
 
   .trienlam-wrapper video {
-   width: 45vw;
+    width: 40vw;
+  }
+}
+
+@media (max-width: 550px) {
+  .trienlam-wrapper .w-100.h-100 {
+    transform: translateY(2vh) !important;
+  }
+
+  .trienlam-wrapper video {
+    width: 45vw;
   }
 }
