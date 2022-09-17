@@ -20,7 +20,7 @@ function TriemLam() {
           <img src={gttrienlam} alt="" className="w-100 gttrienlam" />
         </div>
         <div className="d-flex justify-content-center mt-4">
-          <a href="" className="trien-lam-button">
+          <a href="https://trien-lam.netlify.app" className="trien-lam-button">
             <b>VÀO XEM</b>
           </a>
         </div>
