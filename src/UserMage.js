@@ -11,6 +11,7 @@ const UserMage = () => {
   const [search, setSearch] = useState("");
   const [active, setActive] = useState(false);
   const [form, setForm] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -80,7 +81,7 @@ const UserMage = () => {
 
   return (
     <div className="user-manage-wrapper">
-      {/* <div>
+      <div>
         <div
           style={{
             textAlign: "right",
@@ -88,8 +89,8 @@ const UserMage = () => {
         >
           <Button text="THÊM MỚI" bold />
         </div>
-      </div> */}
-      {/* <div
+      </div>
+      <div
         style={{
           marginTop: "2rem",
         }}
@@ -251,7 +252,9 @@ const UserMage = () => {
             ))}
           </tbody>
         </table>
-      </div> */}
+      </div>
+
+      {/* modal  */}
     </div>
   );
 };

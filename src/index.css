@@ -58,13 +58,18 @@ body {
     0.065vw -0.065vw #ff0000, -0.065vw -0.065vw #ff0000;
 }
 
-.main-wrapper {
+.main-wrapper,
+.main-wrapper-thong-ke {
   background-image: url("../public/XIX-CHECKINDAIBIEU.jpg");
   width: 100%;
   height: 100vh;
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.main-wrapper-thong-ke {
+  background-image: url("../public/XIX-THONGKE.jpg");
 }
 
 code {
@@ -155,6 +160,11 @@ h1 {
 
 .title-wrapper {
   margin-bottom: 0.6rem;
+}
+
+.title-wrapper h2 {
+  font-size: 2vw;
+  margin-bottom: 2.5vh;
 }
 
 .ant-list-items {
@@ -253,14 +263,21 @@ h1 {
 /* table  */
 
 table {
-  max-width: 960px;
+  /* max-width: 960px; */
   margin: 10px auto;
+}
+
+table td,
+th {
+  font-size: 1vw;
+  text-align: center;
 }
 
 thead th {
   font-weight: 400;
   background: #8a97a0;
   color: #fff;
+  text-align: center;
 }
 
 tr {
@@ -297,23 +314,41 @@ tfoot td {
 
 /* statistical */
 .statistical {
-  width: 400px;
+  /* width: 400px */
+  padding: 1vh 1vw;
+  padding-top: 0;
 }
+.statistical .listCountUnit {
+  max-height: 63vh;
+  overflow-y: auto;
+}
+
+.statistical p {
+  font-size: 1vw;
+}
+
+/* end  */
 
 .tabs {
   display: flex;
-  max-width: 700px;
   width: 100%;
+  max-width: 45vw;
   white-space: nowrap;
   overflow-x: scroll;
+  padding-bottom: 0.5rem;
 }
 
 .tab {
-  padding: 10px 20px;
+  padding: 0.6vh 1vw;
   border: 1px solid #888;
   margin-left: 10px;
   cursor: pointer;
   margin-bottom: 10px;
+  font-size: 1vw;
+}
+
+.tab:first-child {
+  margin-left: 0px !important;
 }
 
 .tab.active {
@@ -380,6 +415,22 @@ input[type="text"] {
 .persion-info::-webkit-scrollbar-thumb {
   background: #fff;
   border-radius: 0.2vw;
+}
+
+.tabs::-webkit-scrollbar {
+  /* width: 0.2vh; */
+  height: 0.85vh;
+  /* padding: 0 10px; */
+  /* background: transparent; */
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background: red;
+  /* border-radius: 0.2vw; */
 }
 
 @media (min-width: 900px) {

@@ -1,11 +1,18 @@
-import { Col, List, Row } from "antd";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import moment from "moment";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Scanner from "./components/scanner";
 import { db } from "./firebase";
-import { v4 as uuidv4 } from "uuid";
+import demoImage from "../src/demo.png";
 
 function App() {
   const [userCurrent, setUserCurrent] = useState(null);
@@ -26,7 +33,7 @@ function App() {
       });
       arr.sort((a, b) => b.checkIn - a.checkIn);
 
-      // setListAttend(arr);
+      setListAttend(arr);
     });
     return () => {
       unsubscribe();
@@ -93,10 +100,7 @@ function App() {
           }}
         >
           <img
-            src={
-              userCurrent?.userImg ||
-              "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg"
-            }
+            src={userCurrent?.userImg || demoImage}
             style={{}}
             className="w-100 h-100"
             alt=""
@@ -133,10 +137,15 @@ function App() {
               <h1 className="font-title-medium border-text-red font-large text-white">
                 {userCurrent?.name || "NGUYỄN VĂN A"}
               </h1>
-              <h2 className="font-title-medium border-text-white text-green">
-                QUẬN ĐOÀN {userCurrent?.unit || "A"}
+              <h2
+                className="font-title-medium border-text-white text-green"
+                style={{
+                  textTransform: "uppercase",
+                }}
+              >
+                {userCurrent?.unit || "A"}
               </h2>
-              <h2 className="font-title-medium border-text-white text-red">
+              <h2 className="font-title-medium border-text-white text-red ">
                 ĐÃ VỀ THAM DỰ ĐẠI HỘI
               </h2>
               {/* <h2 className=" text-pink font-title-medium border-text-white">
