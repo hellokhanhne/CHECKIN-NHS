@@ -9,12 +9,16 @@ import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [userCurrent, setUserCurrent] = useState(null);
-  // const [listAttend, setListAttend] = useState([]);
+  const [listAttend, setListAttend] = useState([]);
 
   const prev = useRef("");
 
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
+
+    // const k = query(collection(db, "users"));
+    // getDocs(k).then((d) => console.log(d.docs));
+
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = [];
       querySnapshot.forEach((doc) => {
@@ -70,7 +74,7 @@ function App() {
   );
 
   return (
-    <div className={` main-wrapper`}>
+    <div className={` main-wrapper position-relative`}>
       <div
         className="w-100 h-100 d-flex align-items-center justify-content-between"
         style={{
@@ -135,143 +139,29 @@ function App() {
               <h2 className="font-title-medium border-text-white text-red">
                 ĐÃ VỀ THAM DỰ ĐẠI HỘI
               </h2>
-              <h2 className=" text-pink font-title-medium border-text-white">
+              {/* <h2 className=" text-pink font-title-medium border-text-white">
                 VỊ TRÍ GHẾ NGỒI PHIÊN 1: {userCurrent?.seat1 || "00"}
               </h2>
               <h2 className=" text-pink font-title-medium border-text-white">
                 VỊ TRÍ GHẾ NGỒI PHIÊN 2: {userCurrent?.seat2 || "00"}
-              </h2>
+              </h2> */}
             </div>
           </div>
         </div>
       </div>
-      {/* <div>
-          <div className="d-flex  ">
-            <div
-              className="flex-1 "
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="title-wrapper">
-                <h2 className="text-green">
-                  NHIỆT LIỆT CHÀO MỪNG ĐẠI BIỂU VỀ THAM DỰ
-                </h2>
-                <h1 className="text-red">
-                  <span
-                    style={{
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    ĐẠI HỘI ĐẠI BIỂU ĐOÀN TNCS HỒ CHÍ MINH
-                  </span>{" "}
-                  <br />
-                  <span>QUẬN NGŨ HÀNH SƠN</span>
-                  <br />
-                  <span className="text-green">
-                    LẦN THỨ VI, NHIỆM KỲ 2022-2027
-                  </span>
-                </h1>
-              </div>
-
-              <div
-                className="d-flex "
-                style={{
-                  marginTop: "1rem",
-                }}
-              >
-                <div
-                  style={{
-                    maxWidth: 200,
-                    objectFit: "cover",
-                  }}
-                >
-                  <img
-                    className="w-100"
-                    src={
-                      userCurrent?.userImg ||
-                      "https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg"
-                    }
-                    alt=""
-                  />
-                </div>
-                <div
-                  className="flex-1"
-                  style={{
-                    marginLeft: "1rem",
-                    marginRight: "1rem",
-                    marginTop: "1rem",
-                  }}
-                >
-                  <span className="text-info">
-                    <span className="text-green">Chào mừng đại biểu:</span>{" "}
-                    <span
-                      style={{
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      <span
-                        className="text-red"
-                        style={{
-                          fontSize: 30,
-                        }}
-                      >
-                        {" "}
-                        {userCurrent?.name || ""}
-                      </span>
-                    </span>
-                  </span>
-                  <br />
-                  <span className="text-info">
-                    <span className="text-green">
-                      Đơn vị : {userCurrent?.unit || ""}
-                    </span>
-                  </span>
-                  <br />
-                  <span className="text-info">
-                    {" "}
-                    <span className="text-green">
-                      Thời gian:{" "}
-                      {userCurrent &&
-                        moment(userCurrent.checkIn).format("DD-MM-YYYY HH:mm")}
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="scanner-wrapper">
-              <Row className="bg-white">
-                <Col span={24}>
-                  <Scanner onScan={scan} />
-                </Col>
-                <Col span={24}>
-                  <List
-                    size="large"
-                    className="w-100"
-                    header={
-                      <div>
-                        Tổng đại biểu đã tham dự:{" "}
-                        <b>{new Set(listAttend.map((l) => l.userId)).size}</b>{" "}
-                      </div>
-                    }
-                    bordered
-                    dataSource={listAttend || []}
-                    renderItem={(item) => (
-                      <List.Item>
-                        {item?.name}
-                        {"   "}
-                        {moment(item?.checkIn).format("DD-MM-YYYY HH:mm")}
-                      </List.Item>
-                    )}
-                  />
-                </Col>
-              </Row>
-            </div>
-          </div>
-        </div> */}
+      <div
+        className="position-absolute w-100"
+        style={{
+          bottom: "2.35vh",
+        }}
+      >
+        <div className="text-center">
+          <h1 className=" border-text-blue font-large text-blue mb-0 ">
+            TỔNG SỐ ĐẠI BIỂU THAM DỰ :{" "}
+            {new Set(listAttend.map((l) => l.userId)).size}
+          </h1>
+        </div>
+      </div>
     </div>
   );
 }

@@ -39,9 +39,18 @@ body {
   color: #ff3399;
 }
 
+.text-blue {
+  color: #003399;
+}
+
 .border-text-white {
   text-shadow: 0.065vw 0.065vw #fff, -0.065vw 0.065vw #fff,
     0.065vw -0.065vw #fff, -0.065vw -0.065vw #fff;
+}
+
+.border-text-blue {
+  text-shadow: 0.065vw 0.065vw #5ecff8, -0.065vw 0.065vw #5ecff8,
+    0.065vw -0.065vw #5ecff8, -0.065vw -0.065vw #5ecff8;
 }
 
 .border-text-red {
