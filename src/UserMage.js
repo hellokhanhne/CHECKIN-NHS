@@ -1,65 +1,38 @@
-import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
-import moment from "moment";
+import { Spin } from "antd";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import { db } from "./firebase";
-import Button from "./components/button";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreateUserModal from "./components/CreateUserModalx";
+import UpdateUserModal from "./components/UpdateUserModal";
+import { db } from "./firebase";
+import useDebounce from "./hooks/useDebounce";
 
 const UserMage = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-  const [active, setActive] = useState(false);
-  const [form, setForm] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [selectUser, setSelectedUser] = useState(null);
+  const [showModalCreate, setShowModalCreate] = useState(false);
+  const [tabs, setTabs] = useState([]);
+  const debouncedValue = useDebounce(search, 500);
+  const [unit, setUnit] = useState(tabs[0]);
+  const [loading, setLoading] = useState(true);
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSetForm = (payload) => {
-    setForm(payload);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form) return;
-    const usersRef = doc(db, "users", form.id);
-    const { group, seat1, seat2, qrcode, type, userImg } = form;
-    setDoc(
-      usersRef,
-      {
-        group,
-        seat1,
-        seat2,
-        qrcode,
-        type,
-        userImg,
-      },
-      { merge: true }
-    );
-    toast.success("Cập nhật thành công !", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-    setForm(null);
-  };
-
-  const handleCancel = () => {
-    setForm(undefined);
+  const handleModalUpdate = (val) => {
+    if (!val) {
+      setSelectedUser(null);
+    }
   };
 
   useEffect(() => {
-    const q = query(collection(db, "users"));
+    if (!unit) return;
+    const q = query(collection(db, "users"), where("unit", "==", unit || ""));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = [];
       querySnapshot.forEach((doc) => {
@@ -67,195 +40,166 @@ const UserMage = () => {
       });
 
       setUsers(
-        arr.filter(
-          (u) =>
-            u.name.toUpperCase().includes(search.toUpperCase()) &&
-            (!active ? true : !u.qrcode)
+        arr.filter((u) =>
+          u.name.toUpperCase().includes(debouncedValue.toUpperCase())
         )
       );
     });
     return () => {
       unsubscribe();
     };
-  }, [search, active]);
+  }, [debouncedValue, unit]);
+
+  useEffect(() => {
+    (async () => {
+      const querySnapshot = await getDocs(collection(db, "units"));
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data().value);
+      });
+      data.sort((a, b) => a.localeCompare(b));
+      setTabs(data);
+      setUnit(data[0]);
+      setLoading(false);
+    })();
+  }, []);
 
   return (
-    <div className="user-manage-wrapper">
-      <div>
+    <>
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0,0,0,.3)",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      )}
+      <ToastContainer />
+      <div className="user-manage-wrapper">
         <div
           style={{
             textAlign: "right",
           }}
         >
-          <Button text="THÊM MỚI" bold />
+          <button
+            className="btn text-danger btn-warning text-bold"
+            onClick={() => setShowModalCreate(true)}
+          >
+            Thêm mới
+          </button>
         </div>
-      </div>
-      <div
-        style={{
-          marginTop: "2rem",
-        }}
-      >
-        <ToastContainer />
-        {form && (
-          <div className="form-wrapper">
-            <div>
-              <form onSubmit={handleSubmit}>
-                <p>Tên </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="name"
-                  disabled
-                  value={form.name}
-                />
-                <p>Nhóm </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="group"
-                  value={form.group}
-                />
-                <p>Seat1 </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="seat1"
-                  value={form.seat1}
-                />
-                <p>Seat2 </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="seat2"
-                  value={form.seat2}
-                />
-                <p>QR code </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="qrcode"
-                  value={form.qrcode}
-                />
-                <p>Type </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="type"
-                  value={form.type}
-                />
-                <p>Image </p>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="userImg"
-                  value={form.userImg}
-                />
-                <div
-                  className="d-flex align-items-center"
-                  style={{
-                    marginTop: "1rem",
-                    marginBottom: "3rem",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <button type="submit" className="edit btn-primary">
-                    Save
-                  </button>
-                  <button className="edit btn-danger" onClick={handleCancel}>
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
 
-        <div className="d-flex align-items-center justify-content-center mb-4">
-          <h3 className="pe-4">Tìm kiếm ( có dấu ) </h3>
-          <input
-            type="text"
-            value={search}
-            name="search"
-            onChange={(e) => setSearch(e.target.value)}
-            id=""
-          />
-        </div>
-        <div className="d-flex justify-content-center">
-          <div
-            onClick={() => setActive(false)}
-            className={`tab ${!active && "active"}`}
-          >
-            All
-          </div>
-          <div
-            onClick={() => setActive(true)}
-            className={`tab ${active && "active"}`}
-          >
-            Chưa điền thông tin
-          </div>
-        </div>
-        <table
+        <div
           style={{
-            marginBottom: 0,
-            marginTop: 0,
-            maxWidth: "100%",
+            marginTop: "2rem",
           }}
         >
-          <thead>
-            <tr>
-              <th scope="col">Ảnh</th>
-              <th scope="col">Tên</th>
-              <th scope="col">Unit</th>
+          <div className="d-flex align-items-center justify-content-center mb-4">
+            <h3 className="pe-4 mb-0 border-text-blue text-blue flex-1">
+              Tìm kiếm ( có dấu ){" "}
+            </h3>
+            <input
+              className="form-control"
+              type="text"
+              style={{
+                maxWidth: "75%",
+              }}
+              value={search}
+              name="search"
+              onChange={(e) => setSearch(e.target.value)}
+              id=""
+            />
+          </div>
+          <div className="d-flex align-items-center justify-content-center mb-4">
+            <h3 className="pe-4 mb-0 border-text-blue text-blue flex-1">
+              Chọn đơn vị
+            </h3>
+            <select
+              className="form-select"
+              value={unit}
+              style={{
+                maxWidth: "75%",
+              }}
+              onChange={(e) => {
+                setUnit(e.target.value);
+              }}
+            >
+              {tabs.map((t) => (
+                <option value={t} key={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div
+            style={{
+              maxHeight: "55vh",
+              overflowY: "auto",
+            }}
+          >
+            <table className="w-100">
+              <thead>
+                <tr>
+                  <th scope="col">Ảnh</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Đơn vị</th>
+                  <th scope="col">Qr code </th>
+                  <th scope="col">Edit</th>
+                </tr>
+              </thead>
 
-              <th scope="col">Email</th>
-              <th scope="col">Đã check in</th>
-              <th scope="col">Seat1</th>
-              <th scope="col">Seat2</th>
-              <th scope="col">Group</th>
-              <th scope="col">Qr code </th>
-              <th scope="col">Type</th>
-              <th scope="col">Edit</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {users.map((l) => (
-              <tr key={l.id}>
-                <td>
-                  <img
-                    src={l.userImg}
-                    style={{
-                      width: 150,
-                      height: 100,
-                      objectFit: "cover",
-                    }}
-                    alt=""
-                  />
-                </td>
-                <td>{l.name}</td>
-                <td>{l.unit}</td>
-                <td>{l.email}</td>
-
-                <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
-                <td>{l.seat1}</td>
-                <td>{l.seat2}</td>
-                <td>{l.group}</td>
-                <td>{l.qrcode} </td>
-                <td>{l.type}</td>
-                <td>
-                  {" "}
-                  <button className="edit" onClick={() => handleSetForm(l)}>
-                    Edit
-                  </button>{" "}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              <tbody>
+                {users.map((l) => (
+                  <tr key={l.id}>
+                    <td>
+                      <img
+                        src={l.userImg}
+                        style={{
+                          width: 150,
+                          height: 100,
+                          objectFit: "cover",
+                        }}
+                        alt=""
+                      />
+                    </td>
+                    <td>{l.name}</td>
+                    <td>{l.unit}</td>
+                    <td>{l.qrcode} </td>
+                    <td>
+                      <button
+                        className="btn  btn-secondary"
+                        onClick={() => setSelectedUser(l)}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-
       {/* modal  */}
-    </div>
+
+      <CreateUserModal
+        modalIsOpen={showModalCreate}
+        setIsOpen={setShowModalCreate}
+      />
+
+      <UpdateUserModal
+        modalIsOpen={Boolean(selectUser)}
+        setIsOpen={handleModalUpdate}
+        initForm={selectUser}
+      />
+    </>
   );
 };
 

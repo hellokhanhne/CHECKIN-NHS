@@ -23,9 +23,6 @@ function App() {
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
 
-    // const k = query(collection(db, "users"));
-    // getDocs(k).then((d) => console.log(d.docs));
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = [];
       querySnapshot.forEach((doc) => {

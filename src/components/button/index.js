@@ -27,22 +27,20 @@ export const ButtonLink = ({
   ...props
 }) => {
   return (
-    <a
+    <button
       onClick={onClick}
-      href={href}
-      target="_blank"
       style={{
         ...style,
         textDecoration: "none",
         display: "block",
-        textAlign : "center",
+        textAlign: "center",
         fontWeight: bold ? "bold" : "normal",
       }}
       className={`button button-link  ${className} `}
       {...props}
     >
       {text}
-    </a>
+    </button>
   );
 };
 

@@ -21,7 +21,6 @@ function ListCheckIn() {
         arr.find((u) => u.userId === id)
       );
 
-      // console.log(setUnitArrayUser);
       setTotal(setUnitIds.size);
       setListAttend(arr.filter((n) => n.unit === unit));
 
@@ -94,21 +93,9 @@ function ListCheckIn() {
                   ))}
                 </select>
               </div>
-              {/* <div className="tabs">
-                {tabs.map((t) => (
-                  <div
-                    onClick={() => setUnit(t)}
-                    className={`tab ${t === unit ? "active" : ""}`}
-                    key={t}
-                  >
-                    {t}
-                  </div>
-                ))}
-              </div> */}
             </div>
             <div
               className="w-100 "
-              // className="hidden-scroll"
               style={{
                 maxHeight: "50vh",
                 overflowY: "scroll",
@@ -127,7 +114,7 @@ function ListCheckIn() {
                     <th scope="col">STT</th>
                     <th scope="col">Ảnh</th>
                     <th scope="col">Tên</th>
-                    {/* <th scope="col">Email</th> */}
+
                     <th scope="col">Đã check in vào thời gian</th>
                   </tr>
                 </thead>
@@ -150,8 +137,6 @@ function ListCheckIn() {
                         </LazyLoad>
                       </td>
                       <td>{l.name}</td>
-
-                      {/* <td>{l.email}</td> */}
 
                       <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
                     </tr>
@@ -176,16 +161,7 @@ function ListCheckIn() {
                   }}
                 >
                   {" "}
-                  <h2
-                    className="border-text-blue"
-                    style={
-                      {
-                        // marginBottom: 0,
-                      }
-                    }
-                  >
-                    THỐNG KÊ
-                  </h2>{" "}
+                  <h2 className="border-text-blue">THỐNG KÊ</h2>{" "}
                 </div>
                 <p
                   style={{
@@ -212,126 +188,6 @@ function ListCheckIn() {
           </div>
         </div>
       </div>
-      {/* <div>
-          <div className="d-flex  ">
-            <div
-              className="flex-1 "
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="title-wrapper">
-                {" "}
-                <h2>DANH SÁCH ĐẠI BIỂU ĐÃ THAM GIA</h2>
-                <div className="tabs">
-                  {tabs.map((t) => (
-                    <div
-                      onClick={() => setUnit(t)}
-                      className={`tab ${t === unit ? "active" : ""}`}
-                      key={t}
-                    >
-                      {t}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div
-                // className="hidden-scroll"
-                style={{
-                  maxHeight: 450,
-                  overflowY: "scroll",
-                }}
-              >
-                <table
-                  style={{
-                    marginBottom: 0,
-                    marginTop: 0,
-                  }}
-                >
-                  <thead>
-                    <tr>
-                      <th scope="col">Ảnh</th>
-                      <th scope="col">Tên</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Đã check in vào thời gian</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {listAttend.map((l) => (
-                      <tr key={l.id}>
-                        <td>
-                          <LazyLoad height={100}>
-                            <img
-                              src={l.userImg}
-                              style={{
-                                width: 150,
-                                height: 100,
-                                objectFit: "cover",
-                              }}
-                              alt=""
-                            />
-                          </LazyLoad>
-                        </td>
-                        <td>{l.name}</td>
-
-                        <td>{l.email}</td>
-
-                        <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="statistical">
-              <div
-                className="d-flex  h-100"
-                style={{
-                  paddingLeft: 20,
-                  fontSize: 18,
-                }}
-              >
-                <div>
-                  <div
-                    className="title-wrapper"
-                    style={{
-                      marginBottom: 0,
-                    }}
-                  >
-                    {" "}
-                    <h2
-                      style={{
-                        marginBottom: 0,
-                      }}
-                    >
-                      THỐNG KÊ
-                    </h2>{" "}
-                  </div>
-                  <p
-                    style={{
-                      marginBottom: 5,
-                    }}
-                  >
-                    Số lượng đại biểu đã tham gia :<b>{total}</b>
-                  </p>
-                  {listCountUnit.map((l) => (
-                    <p
-                      key={l.key}
-                      style={{
-                        marginBottom: 5,
-                      }}
-                    >
-                      {l.key} : <b>{l.value}</b>{" "}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
     </div>
   );
 }
