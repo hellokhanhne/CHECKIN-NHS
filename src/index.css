@@ -22,7 +22,7 @@ body {
 }
 
 .font-large {
-  font-size: 1.45vw;
+  font-size: 1.2vw;
 }
 
 .text-red {
@@ -58,7 +58,7 @@ body {
 
 .main-wrapper,
 .main-wrapper-thong-ke {
-  background-image: url("../public/XIX-CHECKINDAIBIEU.jpg");
+  background-image: url("../public/DAIHOIXIX-CHECKIN.jpg");
   width: 100%;
   height: 100vh;
   background-size: 100%;
@@ -67,7 +67,7 @@ body {
 }
 
 .main-wrapper-thong-ke {
-  background-image: url("../public/XIX-THONGKE.jpg");
+  background-image: url("../public/XIX-THONGKE-compressed.jpg");
 }
 
 code {
@@ -211,7 +211,8 @@ h1 {
 }
 
 .user-manage-wrapper {
-  background-image: url("../public/XIX-ADMIN.jpg");
+  background-image: url("../public/XIX-ADMIN-compressed\ \(1\).jpg");
+  /* background: red; */
   width: 100%;
   height: 100vh;
   background-size: 100%;

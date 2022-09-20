@@ -3,12 +3,13 @@ import {
   collection,
   getDocs,
   onSnapshot,
+  orderBy,
   query,
-  where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminWrappter from "./components/AdminWrappter";
 import CreateUserModal from "./components/CreateUserModalx";
 import UpdateUserModal from "./components/UpdateUserModal";
 import { db } from "./firebase";
@@ -21,7 +22,7 @@ const UserMage = () => {
   const [showModalCreate, setShowModalCreate] = useState(false);
   const [tabs, setTabs] = useState([]);
   const debouncedValue = useDebounce(search, 500);
-  const [unit, setUnit] = useState(tabs[0]);
+  const [unit, setUnit] = useState("All");
   const [loading, setLoading] = useState(true);
 
   const handleModalUpdate = (val) => {
@@ -32,16 +33,23 @@ const UserMage = () => {
 
   useEffect(() => {
     if (!unit) return;
-    const q = query(collection(db, "users"), where("unit", "==", unit || ""));
+    const q = query(collection(db, "users"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = [];
       querySnapshot.forEach((doc) => {
         arr.push({ ...doc.data(), id: doc.id });
       });
 
+      arr.sort(
+        (a, b) =>
+          Number(a.qrcode.split("DHXIXTPDN")[1]) - Number(b.qrcode.split("DHXIXTPDN")[1])
+      );
+
       setUsers(
-        arr.filter((u) =>
-          u.name.toUpperCase().includes(debouncedValue.toUpperCase())
+        arr.filter(
+          (u) =>
+            (unit === "All" ? true : u.unit === unit) &&
+            u.name.toUpperCase().includes(debouncedValue.toUpperCase())
         )
       );
     });
@@ -59,7 +67,6 @@ const UserMage = () => {
       });
       data.sort((a, b) => a.localeCompare(b));
       setTabs(data);
-      setUnit(data[0]);
       setLoading(false);
     })();
   }, []);
@@ -82,7 +89,7 @@ const UserMage = () => {
         </div>
       )}
       <ToastContainer />
-      <div className="user-manage-wrapper">
+      <AdminWrappter>
         <div
           style={{
             textAlign: "right",
@@ -131,6 +138,7 @@ const UserMage = () => {
                 setUnit(e.target.value);
               }}
             >
+              <option value="All">All</option>
               {tabs.map((t) => (
                 <option value={t} key={t}>
                   {t}
@@ -147,6 +155,7 @@ const UserMage = () => {
             <table className="w-100">
               <thead>
                 <tr>
+                  <th scope="col">STT</th>
                   <th scope="col">Ảnh</th>
                   <th scope="col">Tên</th>
                   <th scope="col">Đơn vị</th>
@@ -156,8 +165,9 @@ const UserMage = () => {
               </thead>
 
               <tbody>
-                {users.map((l) => (
+                {users.map((l, i) => (
                   <tr key={l.id}>
+                    <td>{i + 1}</td>
                     <td>
                       <img
                         src={l.userImg}
@@ -186,7 +196,7 @@ const UserMage = () => {
             </table>
           </div>
         </div>
-      </div>
+      </AdminWrappter>
       {/* modal  */}
 
       <CreateUserModal

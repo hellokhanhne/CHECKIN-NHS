@@ -1,7 +1,7 @@
 import { Modal } from "antd";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../firebase";
@@ -161,4 +161,4 @@ const CreateUserModal = ({ modalIsOpen, setIsOpen }) => {
   );
 };
 
-export default CreateUserModal;
+export default memo(CreateUserModal);

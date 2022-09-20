@@ -9,7 +9,7 @@ function ListCheckIn() {
   const [total, setTotal] = useState(0);
   const [listCountUnit, setListCountUnit] = useState([]);
   const [tabs, setTabs] = useState([]);
-  const [unit, setUnit] = useState(tabs[0]);
+  const [unit, setUnit] = useState("All");
 
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
@@ -22,7 +22,7 @@ function ListCheckIn() {
       );
 
       setTotal(setUnitIds.size);
-      setListAttend(arr.filter((n) => n.unit === unit));
+      setListAttend(arr.filter((n) => unit === "All" ? true : n.unit === unit));
 
       const obj = setUnitArrayUser.reduce((prev, current) => {
         return prev[current.unit]
@@ -80,12 +80,13 @@ function ListCheckIn() {
                 }}
               >
                 <select
-                  className="form-select"
+                  className="form-select w-100"
                   value={unit}
                   onChange={(e) => {
                     setUnit(e.target.value);
                   }}
                 >
+                  <option value="All">All</option>
                   {tabs.map((t) => (
                     <option value={t} key={t}>
                       {t}

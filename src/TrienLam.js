@@ -1,5 +1,6 @@
 import banner from "../src/banner.png";
 import gttrienlam from "../src/GThieuTrienLam.png";
+import video from "../src/ĐẠI HỘI ĐOÀN THCS HỒ CHÍ MINH THÀNH PHỐ ĐÀ NẴNG LẦN THỨ XIX, NHIỆM KỲ 2022-2027.mp4"
 
 function TriemLam() {
   return (
@@ -11,7 +12,7 @@ function TriemLam() {
         <div className="video-wrapper">
           <video controls loop autoPlay muted>
             <source
-              src="https://discloud-storage.herokuapp.com/file/df1d23b10519895fb4a9dfe7c4519535/trailer.mp4"
+              src={video}
               type="video/mp4"
             />
           </video>

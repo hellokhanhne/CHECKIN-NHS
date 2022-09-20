@@ -45,16 +45,19 @@ function App() {
       }
       prev.current = value;
 
-      const q = query(collection(db, "users"), where("qrcode", "==", value));
+      console.log(value)
+
+      const q = query(collection(db, "users"), where("qrcode", "==", value || "" ));
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (_doc) => {
+        console.log(_doc.data())
         const date = moment().valueOf();
         const dateString = moment(date).format("DD-MM-YYYY").toString();
         setUserCurrent({ ..._doc.data(), checkIn: date });
         const q2 = query(
           collection(db, "checkIns_test_5"),
-          where("userId", "==", _doc.data().userId)
+          where("qrcode", "==", _doc.data().qrcode) 
         );
         let checkExist = false;
         for (let snap of (await getDocs(q2)).docs) {
@@ -128,19 +131,36 @@ function App() {
                 padding: "1vw 0.75rem",
               }}
             >
-              <h1 className="font-title-medium border-text-white text-red">
+              <h1
+                className="font-title-medium border-text-white text-red"
+                style={{
+                  marginBottom: "1.75vh",
+                
+                }}
+              >
                 NHIỆT LIỆT CHÀO MỪNG ĐẠI BIỂU
               </h1>
-              <h1 className="font-title-medium border-text-red font-large text-white">
+              <h1
+                className="font-title-medium border-text-red font-large text-white"
+                style={{
+                  marginBottom: "1.15vh",
+                  padding: "0 1.25vw",
+                  lineHeight : 1.55
+                }}
+              >
                 {userCurrent?.name || "NGUYỄN VĂN A"}
               </h1>
               <h2
                 className="font-title-medium border-text-white text-green"
                 style={{
                   textTransform: "uppercase",
+                  marginBottom: "1.15vh",
+                  padding: "0 1.25vw",
+                  lineHeight : 1.55
                 }}
               >
-                {userCurrent?.unit || "A"}
+                {userCurrent?.unit ||
+                  "Đoàn A"}
               </h2>
               <h2 className="font-title-medium border-text-white text-red ">
                 ĐÃ VỀ THAM DỰ ĐẠI HỘI
