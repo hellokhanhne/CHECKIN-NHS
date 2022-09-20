@@ -51,7 +51,7 @@ function App() {
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (_doc) => {
-        console.log(_doc.data())
+        // console.log(_doc.data())
         const date = moment().valueOf();
         const dateString = moment(date).format("DD-MM-YYYY").toString();
         setUserCurrent({ ..._doc.data(), checkIn: date });
@@ -184,7 +184,7 @@ function App() {
         <div className="text-center">
           <h1 className=" border-text-blue font-large text-blue mb-0 ">
             TỔNG SỐ ĐẠI BIỂU THAM DỰ :{" "}
-            {new Set(listAttend.map((l) => l.userId)).size}
+            {new Set(listAttend.map((l) => l.qrcode)).size}
           </h1>
         </div>
       </div>

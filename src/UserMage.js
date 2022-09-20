@@ -138,7 +138,7 @@ const UserMage = () => {
                 setUnit(e.target.value);
               }}
             >
-              <option value="All">All</option>
+              <option value="All">Tất cả</option>
               {tabs.map((t) => (
                 <option value={t} key={t}>
                   {t}

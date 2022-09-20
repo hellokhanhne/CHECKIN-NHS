@@ -16,9 +16,9 @@ function ListCheckIn() {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
       arr.sort((a, b) => a.checkIn - b.checkIn);
-      const setUnitIds = new Set(arr.map((l) => l.userId));
+      const setUnitIds = new Set(arr.map((l) => l.qrcode));
       const setUnitArrayUser = Array.from(setUnitIds).map((id) =>
-        arr.find((u) => u.userId === id)
+        arr.find((u) => u.qrcode === id)
       );
 
       setTotal(setUnitIds.size);
@@ -86,7 +86,7 @@ function ListCheckIn() {
                     setUnit(e.target.value);
                   }}
                 >
-                  <option value="All">All</option>
+                  <option value="All">Tất cả</option>
                   {tabs.map((t) => (
                     <option value={t} key={t}>
                       {t}
