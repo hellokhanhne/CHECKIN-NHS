@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -10,25 +11,51 @@ function ListCheckIn() {
   const [listCountUnit, setListCountUnit] = useState([]);
   const [tabs, setTabs] = useState([]);
   const [unit, setUnit] = useState("All");
+  const [isJoin, setIsJoin] = useState(true);
+  // const [analysis, setAnalysis] = useState()
 
   useEffect(() => {
     const q = query(collection(db, "checkIns_test_5"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+
+    const unsubscribe = onSnapshot(q, async (querySnapshot) => {
       const arr = querySnapshot.docs.map((d) => d.data());
-      arr.sort((a, b) => a.checkIn - b.checkIn);
+
+      const querySnapshot_2 = await getDocs(collection(db, "users"));
+
+      if (!isJoin) {
+        const data_user_notcheckin = [];
+        querySnapshot_2.forEach((doc) => {
+          if (!arr.find((r) => r.qrcode === doc.data().qrcode)) {
+            data_user_notcheckin.push(doc.data());
+          }
+        });
+        setListAttend(
+          data_user_notcheckin.filter((n) =>
+            unit === "All" ? true : n.unit === unit
+          )
+        );
+      }
+
+      if (isJoin) {
+        arr.sort((a, b) => a.checkIn - b.checkIn);
+        setListAttend(
+          arr.filter((n) => (unit === "All" ? true : n.unit === unit))
+        );
+      }
+
       const setUnitIds = new Set(arr.map((l) => l.qrcode));
       const setUnitArrayUser = Array.from(setUnitIds).map((id) =>
         arr.find((u) => u.qrcode === id)
       );
 
       setTotal(setUnitIds.size);
-      setListAttend(arr.filter((n) => unit === "All" ? true : n.unit === unit));
 
       const obj = setUnitArrayUser.reduce((prev, current) => {
         return prev[current.unit]
           ? { ...prev, [current.unit]: prev[current.unit] + 1 }
           : { ...prev, [current.unit]: 1 };
       }, {});
+
       const newListCountUnit = [];
       for (let [key, value] of Object.entries(obj)) {
         newListCountUnit.push({
@@ -43,7 +70,7 @@ function ListCheckIn() {
     return () => {
       unsubscribe();
     };
-  }, [unit, tabs]);
+  }, [unit, tabs, isJoin]);
 
   useEffect(() => {
     (async () => {
@@ -76,23 +103,41 @@ function ListCheckIn() {
               </h2>
               <div
                 style={{
-                  width: "45vw",
+                  width: "54vw",
+                  alignItems: "center",
                 }}
+                className="d-flex"
               >
                 <select
-                  className="form-select w-100"
+                  className="form-select w-100 "
                   value={unit}
                   onChange={(e) => {
                     setUnit(e.target.value);
                   }}
                 >
                   <option value="All">Tất cả</option>
+                  {/* <option value="Đoàn TNCS Hồ Chí Minh Huyện Hòa Vang">"Đoàn TNCS Hồ Chí Minh Huyện Hòa Vang"</option> */}
                   {tabs.map((t) => (
                     <option value={t} key={t}>
                       {t}
                     </option>
                   ))}
                 </select>
+                <div className="d-flex ms-2">
+                  <Button
+                    onClick={() => setIsJoin(true)}
+                    type={isJoin ? "primary" : "dashed"}
+                    className="me-2"
+                  >
+                    Đã tham gia
+                  </Button>
+                  <Button
+                    onClick={() => setIsJoin(false)}
+                    type={!isJoin ? "primary" : "dashed"}
+                  >
+                    Chưa tham gia
+                  </Button>
+                </div>
               </div>
             </div>
             <div
@@ -122,7 +167,7 @@ function ListCheckIn() {
 
                 <tbody>
                   {listAttend.map((l, i) => (
-                    <tr key={l.id}>
+                    <tr key={i}>
                       <td>{i + 1}</td>
                       <td>
                         <LazyLoad height={100}>
@@ -173,9 +218,9 @@ function ListCheckIn() {
                 </p>
                 <hr />
                 <div className="listCountUnit">
-                  {listCountUnit.map((l) => (
+                  {listCountUnit.map((l, i) => (
                     <p
-                      key={l.key}
+                      key={i}
                       style={{
                         marginBottom: 5,
                       }}
