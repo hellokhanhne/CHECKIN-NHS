@@ -54,7 +54,7 @@ function Scanner({ onScan }) {
               video: { deviceId: device.deviceId },
             }}
             style={{
-              height: "20vh",
+              height: "25vh",
               objectFit: "fill",
             }}
             delay={100}

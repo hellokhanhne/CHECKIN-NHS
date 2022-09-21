@@ -86,12 +86,13 @@ function App() {
         className="w-100 h-100 d-flex align-items-center justify-content-between"
         style={{
           padding: "0 10vw",
+          paddingRight: "11vw"
         }}
       >
         <div
           style={{
             width: "32%",
-            height: "50vh",
+            height: "56vh",
             transform: "translateY(-2vh)",
             objectFit: "fill",
             borderRadius: "1rem",
@@ -110,7 +111,7 @@ function App() {
           className="d-flex flex-column"
           style={{
             width: "32%",
-            height: "50vh",
+            height: "56vh",
             transform: "translateY(-2vh)",
             objectFit: "fill",
             borderRadius: "1rem",
@@ -144,7 +145,7 @@ function App() {
                 className="font-title-medium border-text-red font-large text-white"
                 style={{
                   marginBottom: "1.15vh",
-                  padding: "0 1.25vw",
+                  padding: "0 .75vw",
                   lineHeight : 1.55
                 }}
               >

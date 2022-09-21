@@ -169,7 +169,7 @@ function ListCheckIn() {
                     marginBottom: 5,
                   }}
                 >
-                  Số lượng đại biểu đã tham gia :<b>{total}</b>
+                  Số lượng đại biểu đã tham gia :<b className="ms-1">{total}</b>
                 </p>
                 <hr />
                 <div className="listCountUnit">
