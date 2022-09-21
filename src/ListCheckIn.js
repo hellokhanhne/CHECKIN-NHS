@@ -7,7 +7,10 @@ import { db } from "./firebase";
 
 function ListCheckIn() {
   const [listAttend, setListAttend] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState({
+    totalJoin : 0,
+    total : 0
+  });
   const [listCountUnit, setListCountUnit] = useState([]);
   const [tabs, setTabs] = useState([]);
   const [unit, setUnit] = useState("All");
@@ -48,7 +51,10 @@ function ListCheckIn() {
         arr.find((u) => u.qrcode === id)
       );
 
-      setTotal(setUnitIds.size);
+      setTotal({
+        totalJoin : setUnitIds.size,
+        total : querySnapshot_2.size
+      });
 
       const obj = setUnitArrayUser.reduce((prev, current) => {
         return prev[current.unit]
@@ -60,10 +66,18 @@ function ListCheckIn() {
       for (let [key, value] of Object.entries(obj)) {
         newListCountUnit.push({
           key,
-          value,
+          value: {
+            data: value,
+            totalItemsUnit: querySnapshot_2.docs
+              .map((d) => d.data())
+              .reduce((t, c) => {
+                return c.unit === key ? t + 1 : t;
+              }, 0),
+          },
         });
       }
       newListCountUnit.sort((a, b) => a.key.localeCompare(b.key));
+
       setListCountUnit(newListCountUnit);
     });
 
@@ -103,7 +117,7 @@ function ListCheckIn() {
               </h2>
               <div
                 style={{
-                  width: "54vw",
+                  width: "52vw",
                   alignItems: "center",
                 }}
                 className="d-flex"
@@ -214,7 +228,7 @@ function ListCheckIn() {
                     marginBottom: 5,
                   }}
                 >
-                  Số lượng đại biểu đã tham gia :<b className="ms-1">{total}</b>
+                  Số lượng đại biểu đã tham gia :<b className="ms-1">{total.totalJoin} / {total.total}</b>
                 </p>
                 <hr />
                 <div className="listCountUnit">
@@ -225,7 +239,7 @@ function ListCheckIn() {
                         marginBottom: 5,
                       }}
                     >
-                      {l.key} : <b className="ms-1">{l.value}</b>{" "}
+                      {l.key} : <b className="ms-1">{l.value.data} / {l.value.totalItemsUnit}</b>{" "}
                     </p>
                   ))}
                 </div>
