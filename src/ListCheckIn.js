@@ -3,13 +3,14 @@ import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import LazyLoad from "react-lazyload";
+import CommonBottom from "./components/CommonBottom";
 import { db } from "./firebase";
 
 function ListCheckIn() {
   const [listAttend, setListAttend] = useState([]);
   const [total, setTotal] = useState({
-    totalJoin : 0,
-    total : 0
+    totalJoin: 0,
+    total: 0,
   });
   const [listCountUnit, setListCountUnit] = useState([]);
   const [tabs, setTabs] = useState([]);
@@ -52,8 +53,8 @@ function ListCheckIn() {
       );
 
       setTotal({
-        totalJoin : setUnitIds.size,
-        total : querySnapshot_2.size
+        totalJoin: setUnitIds.size,
+        total: querySnapshot_2.size,
       });
 
       const obj = setUnitArrayUser.reduce((prev, current) => {
@@ -112,9 +113,7 @@ function ListCheckIn() {
           <div className="flex-1">
             <div className="title-wrapper">
               {" "}
-              <h2 className="border-text-blue">
-                DANH SÁCH ĐẠI BIỂU 
-              </h2>
+              <h2 className="border-text-blue">DANH SÁCH ĐẠI BIỂU</h2>
               <div
                 style={{
                   width: "52vw",
@@ -181,10 +180,11 @@ function ListCheckIn() {
 
                 <tbody>
                   {listAttend.map((l, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>
-                        {/* <LazyLoad height={100}> */}
+                    // <LazyLoad key={i} height={200} offset={100}>
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td>
+                          {/* <LazyLoad height={100}> */}
                           <img
                             src={l.userImg}
                             style={{
@@ -194,12 +194,17 @@ function ListCheckIn() {
                             }}
                             alt=""
                           />
-                        {/* </LazyLoad> */}
-                      </td>
-                      <td>{l.name}</td>
+                          {/* </LazyLoad> */}
+                        </td>
+                        <td>{l.name}</td>
 
-                      <td>{l.checkIn ? moment(l.checkIn).format("DD-MM-YYYY HH:mm") : "Chưa check in"}</td>
-                    </tr>
+                        <td>
+                          {l.checkIn
+                            ? moment(l.checkIn).format("DD-MM-YYYY HH:mm")
+                            : "Chưa check in"}
+                        </td>
+                      </tr>
+                    // </LazyLoad>
                   ))}
                 </tbody>
               </table>
@@ -228,7 +233,10 @@ function ListCheckIn() {
                     marginBottom: 5,
                   }}
                 >
-                  Số lượng đại biểu đã tham gia :<b className="ms-1">{total.totalJoin} / {total.total}</b>
+                  Số lượng đại biểu đã tham gia :
+                  <b className="ms-1">
+                    {total.totalJoin} / {total.total}
+                  </b>
                 </p>
                 <hr />
                 <div className="listCountUnit">
@@ -239,7 +247,10 @@ function ListCheckIn() {
                         marginBottom: 5,
                       }}
                     >
-                      {l.key} : <b className="ms-1">{l.value.data} / {l.value.totalItemsUnit}</b>{" "}
+                      {l.key} :{" "}
+                      <b className="ms-1">
+                        {l.value.data} / {l.value.totalItemsUnit}
+                      </b>{" "}
                     </p>
                   ))}
                 </div>
@@ -248,6 +259,9 @@ function ListCheckIn() {
           </div>
         </div>
       </div>
+      <CommonBottom styleRight={{
+        paddingBottom : ".5rem"
+      }} />
     </div>
   );
 }

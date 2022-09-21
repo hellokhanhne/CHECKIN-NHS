@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import Scanner from "./components/scanner";
 import { db } from "./firebase";
 import demoImage from "../src/demo.png";
+import CommonBottom from "./components/CommonBottom";
 
 function App() {
   const [userCurrent, setUserCurrent] = useState(null);
@@ -45,9 +46,12 @@ function App() {
       }
       prev.current = value;
 
-      console.log(value)
+      console.log(value);
 
-      const q = query(collection(db, "users"), where("qrcode", "==", value || "" ));
+      const q = query(
+        collection(db, "users"),
+        where("qrcode", "==", value || "")
+      );
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(async (_doc) => {
@@ -57,7 +61,7 @@ function App() {
         setUserCurrent({ ..._doc.data(), checkIn: date });
         const q2 = query(
           collection(db, "checkIns_test_5"),
-          where("qrcode", "==", _doc.data().qrcode) 
+          where("qrcode", "==", _doc.data().qrcode)
         );
         let checkExist = false;
         for (let snap of (await getDocs(q2)).docs) {
@@ -86,7 +90,7 @@ function App() {
         className="w-100 h-100 d-flex align-items-center justify-content-between"
         style={{
           padding: "0 10vw",
-          paddingRight: "11vw"
+          paddingRight: "11vw",
         }}
       >
         <div
@@ -136,7 +140,7 @@ function App() {
                 className="font-title-medium border-text-white text-red"
                 style={{
                   marginBottom: "1.75vh",
-                
+                  whiteSpace: "nowrap",
                 }}
               >
                 NHIỆT LIỆT CHÀO MỪNG ĐẠI BIỂU
@@ -146,7 +150,7 @@ function App() {
                 style={{
                   marginBottom: "1.15vh",
                   padding: "0 .75vw",
-                  lineHeight : 1.55
+                  lineHeight: 1.55,
                 }}
               >
                 {userCurrent?.name || "NGUYỄN VĂN A"}
@@ -157,11 +161,10 @@ function App() {
                   textTransform: "uppercase",
                   marginBottom: "1.15vh",
                   padding: "0 1.25vw",
-                  lineHeight : 1.55
+                  lineHeight: 1.55,
                 }}
               >
-                {userCurrent?.unit ||
-                  "Đoàn A"}
+                {userCurrent?.unit || "Đoàn A"}
               </h2>
               <h2 className="font-title-medium border-text-white text-red ">
                 ĐÃ VỀ THAM DỰ ĐẠI HỘI
@@ -176,19 +179,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div
-        className="position-absolute w-100"
-        style={{
-          bottom: "2.35vh",
-        }}
-      >
-        <div className="text-center">
-          <h1 className=" border-text-blue font-large text-blue mb-0 ">
-            TỔNG SỐ ĐẠI BIỂU THAM DỰ :{" "}
-            {new Set(listAttend.map((l) => l.qrcode)).size}
-          </h1>
-        </div>
-      </div>
+      <CommonBottom listAttend={listAttend} showAttend={true} />
     </div>
   );
 }
