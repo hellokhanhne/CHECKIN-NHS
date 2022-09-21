@@ -1,7 +1,6 @@
-import banner from "../src/Tieude.png";
 import gttrienlam from "../src/GioithieuTrienlam.png";
+import banner from "../src/Tieude.png";
 import video from "../src/ĐẠI HỘI ĐOÀN THCS HỒ CHÍ MINH THÀNH PHỐ ĐÀ NẴNG LẦN THỨ XIX, NHIỆM KỲ 2022-2027.mp4";
-import CommonBottom from "./components/CommonBottom";
 
 function TriemLam() {
   return (
@@ -34,13 +33,13 @@ function TriemLam() {
             <div className="d-flex">
               <p
                 style={{
-                  width: "32.5vw",
+                  width: "40vw",
                   lineHeight: 1.2,
                 }}
                 className="border-text-blue  text-blue m-auto"
               >
-                Bản quyền thuộc về Thành Đoàn Đà Nẵng. Thiết kế và xây dựng:
-                Đoàn viên Đoàn cơ sỡ Ngọc Khánh - Đình Quý - Tuấn Ngọc.
+                Bản quyền thuộc về Thành Đoàn Đà Nẵng. <br /> Thiết kế và xây dựng:
+                 cơ sỡ Ngọc Khánh - Đình Quý - Tuấn Ngọc.
               </p>
             </div>
           </div>

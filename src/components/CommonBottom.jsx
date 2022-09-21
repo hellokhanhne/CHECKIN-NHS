@@ -19,14 +19,14 @@ const CommonBottom = ({ listAttend, showAttend, styleRight }) => {
         <div className="d-flex">
           <p
             style={{
-              width: "32.5vw",
+              width: "37.5vw",
               lineHeight: 1.2,
               ...styleRight
             }}
-            className="border-text-blue  text-blue m-auto"
+            className="border-text-blue  text-blue m-auto ps-3"
           >
-            Bản quyền thuộc về Thành Đoàn Đà Nẵng. Thiết kế và xây dựng: Đoàn
-            viên Đoàn cơ sỡ Ngọc Khánh - Đình Quý - Tuấn Ngọc.
+            Bản quyền thuộc về Thành Đoàn Đà Nẵng. <br /> Thiết kế và xây dựng: Đoàn
+            viên Ngọc Khánh - Đình Quý - Tuấn Ngọc.
           </p>
         </div>
       </div>
