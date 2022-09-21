@@ -184,7 +184,7 @@ function ListCheckIn() {
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>
-                        <LazyLoad height={100}>
+                        {/* <LazyLoad height={100}> */}
                           <img
                             src={l.userImg}
                             style={{
@@ -194,7 +194,7 @@ function ListCheckIn() {
                             }}
                             alt=""
                           />
-                        </LazyLoad>
+                        {/* </LazyLoad> */}
                       </td>
                       <td>{l.name}</td>
 
