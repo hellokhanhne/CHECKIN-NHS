@@ -180,7 +180,7 @@ function ListCheckIn() {
                         marginBottom: 5,
                       }}
                     >
-                      {l.key} : <b>{l.value}</b>{" "}
+                      {l.key} : <b className="ms-1">{l.value}</b>{" "}
                     </p>
                   ))}
                 </div>
