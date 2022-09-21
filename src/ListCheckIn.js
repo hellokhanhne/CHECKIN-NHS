@@ -113,7 +113,7 @@ function ListCheckIn() {
             <div className="title-wrapper">
               {" "}
               <h2 className="border-text-blue">
-                DANH SÁCH ĐẠI BIỂU ĐÃ THAM GIA
+                DANH SÁCH ĐẠI BIỂU 
               </h2>
               <div
                 style={{
@@ -198,7 +198,7 @@ function ListCheckIn() {
                       </td>
                       <td>{l.name}</td>
 
-                      <td>{moment(l.checkIn).format("DD-MM-YYYY HH:mm")}</td>
+                      <td>{l.checkIn ? moment(l.checkIn).format("DD-MM-YYYY HH:mm") : "Chưa check in"}</td>
                     </tr>
                   ))}
                 </tbody>

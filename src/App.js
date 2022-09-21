@@ -91,7 +91,7 @@ function App() {
       >
         <div
           style={{
-            width: "32%",
+            width: "33%",
             height: "56vh",
             transform: "translateY(-2vh)",
             objectFit: "fill",
@@ -110,7 +110,7 @@ function App() {
         <div
           className="d-flex flex-column"
           style={{
-            width: "32%",
+            width: "33%",
             height: "56vh",
             transform: "translateY(-2vh)",
             objectFit: "fill",
@@ -129,7 +129,7 @@ function App() {
             <div
               className="text-center w-100  d-flex flex-column justify-content-center persion-info "
               style={{
-                padding: "1vw 0.75rem",
+                padding: "1vw 0rem",
               }}
             >
               <h1
