@@ -38,8 +38,8 @@ function TriemLam() {
                 }}
                 className="border-text-blue  text-blue m-auto"
               >
-                Bản quyền thuộc về Thành Đoàn Đà Nẵng. <br /> Thiết kế và xây dựng:
-                 cơ sỡ Ngọc Khánh - Đình Quý - Tuấn Ngọc.
+                Bản quyền thuộc về Thành Đoàn Đà Nẵng. <br /> Thiết kế và xây
+                dựng: Đoàn viên Ngọc Khánh - Đình Quý - Tuấn Ngọc.
               </p>
             </div>
           </div>
