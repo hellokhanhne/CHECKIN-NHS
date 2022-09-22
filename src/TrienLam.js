@@ -33,7 +33,6 @@ function TriemLam() {
             <div className="d-flex">
               <p
                 style={{
-                  width: "40vw",
                   lineHeight: 1.2,
                 }}
                 className="border-text-blue  text-blue m-auto"
