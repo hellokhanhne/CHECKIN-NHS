@@ -10,10 +10,10 @@ import {
 import moment from "moment";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Scanner from "./components/scanner";
-import { db } from "./firebase";
 import demoImage from "../src/demo.png";
 import CommonBottom from "./components/CommonBottom";
+import Scanner from "./components/scanner";
+import { db } from "./firebase";
 
 function App() {
   const [userCurrent, setUserCurrent] = useState(null);
@@ -96,7 +96,7 @@ function App() {
         <div
           style={{
             width: "33%",
-            height: "56vh",
+            height: "50vh",
             transform: "translateY(-2vh)",
             objectFit: "fill",
             borderRadius: "1rem",
@@ -115,8 +115,8 @@ function App() {
           className="d-flex flex-column"
           style={{
             width: "33%",
-            height: "56vh",
-            transform: "translateY(-2vh)",
+            height: "50vh",
+            transform: "translateY(-4vh)",
             objectFit: "fill",
             borderRadius: "1rem",
             border: ".4vw solid #64dafb",
@@ -166,7 +166,12 @@ function App() {
               >
                 {userCurrent?.unit || "Đoàn A"}
               </h2>
-              <h2 className="font-title-medium border-text-white text-red ">
+              <h2
+                className="font-title-medium border-text-white text-red "
+                style={{
+                  lineHeight: 1.3,
+                }}
+              >
                 ĐÃ VỀ THAM DỰ ĐẠI HỘI
               </h2>
               {/* <h2 className=" text-pink font-title-medium border-text-white">

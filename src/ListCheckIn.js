@@ -2,7 +2,6 @@ import { Button } from "antd";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import LazyLoad from "react-lazyload";
 import CommonBottom from "./components/CommonBottom";
 import { db } from "./firebase";
 
@@ -156,7 +155,7 @@ function ListCheckIn() {
             <div
               className="w-100 "
               style={{
-                maxHeight: "50vh",
+                maxHeight: "56.25vh",
                 overflowY: "scroll",
                 marginTop: "3vh",
               }}
@@ -181,29 +180,29 @@ function ListCheckIn() {
                 <tbody>
                   {listAttend.map((l, i) => (
                     // <LazyLoad key={i} height={200} offset={100}>
-                      <tr key={i}>
-                        <td>{i + 1}</td>
-                        <td>
-                          {/* <LazyLoad height={100}> */}
-                          <img
-                            src={l.userImg}
-                            style={{
-                              width: 150,
-                              height: 100,
-                              objectFit: "cover",
-                            }}
-                            alt=""
-                          />
-                          {/* </LazyLoad> */}
-                        </td>
-                        <td>{l.name}</td>
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>
+                        {/* <LazyLoad height={100}> */}
+                        <img
+                          src={l.userImg}
+                          style={{
+                            width: 150,
+                            height: 100,
+                            objectFit: "cover",
+                          }}
+                          alt=""
+                        />
+                        {/* </LazyLoad> */}
+                      </td>
+                      <td>{l.name}</td>
 
-                        <td>
-                          {l.checkIn
-                            ? moment(l.checkIn).format("DD-MM-YYYY HH:mm")
-                            : "Chưa check in"}
-                        </td>
-                      </tr>
+                      <td>
+                        {l.checkIn
+                          ? moment(l.checkIn).format("DD-MM-YYYY HH:mm")
+                          : "Chưa check in"}
+                      </td>
+                    </tr>
                     // </LazyLoad>
                   ))}
                 </tbody>
@@ -259,9 +258,11 @@ function ListCheckIn() {
           </div>
         </div>
       </div>
-      <CommonBottom styleRight={{
-        paddingBottom : ".5rem"
-      }} />
+      <CommonBottom
+        styleRight={{
+          paddingBottom: ".5rem",
+        }}
+      />
     </div>
   );
 }

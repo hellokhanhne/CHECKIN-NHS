@@ -1,11 +1,5 @@
 import { Spin } from "antd";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,7 +36,8 @@ const UserMage = () => {
 
       arr.sort(
         (a, b) =>
-          Number(a.qrcode.split("DHXIXTPDN")[1]) - Number(b.qrcode.split("DHXIXTPDN")[1])
+          Number(a.qrcode.split("DHXIXTPDN")[1]) -
+          Number(b.qrcode.split("DHXIXTPDN")[1])
       );
 
       setUsers(
@@ -148,7 +143,7 @@ const UserMage = () => {
           </div>
           <div
             style={{
-              maxHeight: "55vh",
+              maxHeight: "57.25vh",
               overflowY: "auto",
             }}
           >

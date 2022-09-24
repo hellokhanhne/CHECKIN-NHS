@@ -5,7 +5,7 @@ const CommonBottom = ({ listAttend, showAttend, styleRight }) => {
     <div
       className="position-absolute w-100"
       style={{
-        bottom: ".75vh",
+        bottom: "1.5vh",
       }}
     >
       <div className="text-center">
@@ -21,12 +21,12 @@ const CommonBottom = ({ listAttend, showAttend, styleRight }) => {
             style={{
               width: "37.5vw",
               lineHeight: 1.2,
-              ...styleRight
+              ...styleRight,
             }}
             className="border-text-blue  text-blue m-auto ps-3"
           >
-            Bản quyền thuộc về Thành Đoàn Đà Nẵng. <br /> Thiết kế và xây dựng: Đoàn
-            viên Ngọc Khánh - Đình Quý - Tuấn Ngọc.
+            Bản quyền thuộc về Thành Đoàn Đà Nẵng. <br /> Thiết kế và xây dựng:
+            Đoàn viên Ngọc Khánh - Đình Quý - Tuấn Ngọc.
           </p>
         </div>
       </div>
