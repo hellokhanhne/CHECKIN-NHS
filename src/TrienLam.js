@@ -1,4 +1,4 @@
-import gttrienlam from "../src/GioithieuTrienlam.png";
+import gttrienlam from "../src/GioithieuTrienlam.jpg";
 import banner from "../src/Tieude.png";
 import video from "../src/ĐẠI HỘI ĐOÀN THCS HỒ CHÍ MINH THÀNH PHỐ ĐÀ NẴNG LẦN THỨ XIX, NHIỆM KỲ 2022-2027.mp4";
 
