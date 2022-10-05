@@ -36,8 +36,8 @@ const UserMage = () => {
 
       arr.sort(
         (a, b) =>
-          Number(a.qrcode.split("DHXIXTPDN")[1]) -
-          Number(b.qrcode.split("DHXIXTPDN")[1])
+          Number(a?.qrcode?.split("DHXIXTPDN")[1]) -
+          Number(b?.qrcode?.split("DHXIXTPDN")[1])
       );
 
       setUsers(
