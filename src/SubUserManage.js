@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminWrappter from "./components/AdminWrappter";
-import CreateUserModal from "./components/CreateUserModalx";
-import UpdateUserModal from "./components/UpdateUserModal";
+import SubCreateUserModal from "./components/SubCreateUserModal";
+import SubUpdateUserModal from "./components/SubUpdateUserModal";
 import { db } from "./firebase";
 import useDebounce from "./hooks/useDebounce";
 
-const UserMage = () => {
+const SubUserMage = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [selectUser, setSelectedUser] = useState(null);
@@ -33,8 +33,6 @@ const UserMage = () => {
       querySnapshot.forEach((doc) => {
         arr.push({ ...doc.data(), id: doc.id });
       });
-
-  
 
       arr.sort(
         (a, b) =>
@@ -196,12 +194,12 @@ const UserMage = () => {
       </AdminWrappter>
       {/* modal  */}
 
-      <CreateUserModal
+      <SubCreateUserModal
         modalIsOpen={showModalCreate}
         setIsOpen={setShowModalCreate}
       />
 
-      <UpdateUserModal
+      <SubUpdateUserModal
         modalIsOpen={Boolean(selectUser)}
         setIsOpen={handleModalUpdate}
         initForm={selectUser}
@@ -210,4 +208,4 @@ const UserMage = () => {
   );
 };
 
-export default UserMage;
+export default SubUserMage;
