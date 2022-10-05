@@ -31,7 +31,7 @@ const SubUpdateUserModal = ({ modalIsOpen, setIsOpen, initForm }) => {
       return toast.error("Nhập đầy đủ thông tin !");
     }
     const usersRef = doc(db, "users", form?.id);
-
+    
     setDoc(
       usersRef,
       {

@@ -1,5 +1,12 @@
 import { Spin } from "antd";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,9 +26,18 @@ const SubUserMage = () => {
   const [unit, setUnit] = useState("All");
   const [loading, setLoading] = useState(true);
 
+  // const [deleteId, setDeleteId] = useState(null);
+
   const handleModalUpdate = (val) => {
     if (!val) {
       setSelectedUser(null);
+    }
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Bạn có chắc chắn muốn xóa đại biểu này ?")) {
+      const usersRef = doc(db, "users", id);
+      deleteDoc(usersRef);
     }
   };
 
@@ -178,12 +194,20 @@ const SubUserMage = () => {
                     <td>{l.unit}</td>
                     <td>{l.qrcode} </td>
                     <td>
-                      <button
-                        className="btn  btn-secondary"
-                        onClick={() => setSelectedUser(l)}
-                      >
-                        Edit
-                      </button>
+                      <div className="d-flex">
+                        <button
+                          onClick={() => handleDelete(l.id)}
+                          className="btn btn-danger me-3 text-white"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="btn  btn-secondary"
+                          onClick={() => setSelectedUser(l)}
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
